@@ -14,7 +14,7 @@ objects :
 	r1 = rect : o(<point>) : width(<int>) : height(<int>) : rx(<int>) : ry(<int>) : border-color(<color>) : border-width(<int>) : fill-color(<color>);
 	e1 = ellipse : c(<point>) : ry(<int>) : rx(<int>) : border-color(<color>) : border-width(<int>) : fill-color(<color>);
 	s1 = shape : p(<point>) : p(<point>) : p(<point>) : p(<point>) : ... : border-color(<color>) : border-width(<int>) : close(<bool>) : fill-color(<color>);
-	t1 = text : p(<point>) : font(<string>) : size(<int>) : color(<color>);
+	t1 = text : content(<string>) : p(<point>) : font(<string>) : size(<int>) : color(<color>);
 
 
 transformations :
@@ -22,7 +22,7 @@ transformations :
 	R1 = rotate : angle(<int>) : c(<point>);
 	S1 = scale : sx(<int>) : sy(<int>);
 	T1 = translate : p(<point>);
-
+	H1 = hide : h(<bool>);
 
 controls :
 
@@ -39,4 +39,10 @@ controls :
 	for <int> : <int>
 	{
 		<body> // variable step = iteration en cours
+	}
+	
+	apply <transformations>
+	{
+		<object>;
+		<object>;
 	}
