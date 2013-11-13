@@ -1,11 +1,11 @@
 PNP
 ===
 
-PNP is a compiler that creates SVG files
+PNP is a compiler that creates SVG files.
 
+PHP first version of the language is defined below.
 
-
-objects :
+### Shapes ###
 
 	c0 = color : rgb(<int>, <int>, <int>) : hex(<string>) : name(<string>);
 	p1 = point : x(<int>) : y(<int>);
@@ -17,14 +17,14 @@ objects :
 	t1 = text : content(<string>) : p(<point>) : font(<string>) : size(<int>) : color(<color>);
 
 
-transformations :
+### Transformations ###
 
 	R1 = rotate : angle(<int>) : c(<point>);
 	S1 = scale : sx(<int>) : sy(<int>);
 	T1 = translate : p(<point>);
 	H1 = hide : h(<bool>);
 
-controls :
+### Controls ###
 
 	if <condition>
 	{
@@ -46,3 +46,5 @@ controls :
 		<object>;
 		<object>;
 	}
+	
+If we have time we'll add animations like translation with delta t, rotation, scaling, etc.
