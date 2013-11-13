@@ -6,6 +6,7 @@ PNP is a compiler that creates SVG files
 
 
 objects :
+
 	c0 = color : rgb(<int>, <int>, <int>) : hex(<string>) : name(<string>);
 	p1 = point : x(<int>) : y(<int>);
 	l1 = line : p1(<point>) : p2(<point>) : color(<color>) : width(<int>);
