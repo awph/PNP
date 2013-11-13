@@ -1,0 +1,8 @@
+display = hide : h(false);
+helloText = text : content("Hello world");
+
+apply display
+{
+   helloText;
+}
+
