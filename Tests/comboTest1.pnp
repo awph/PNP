@@ -1,0 +1,17 @@
+display = hide : h(NO);
+
+rayon = 40;
+xPos = 100;
+yPos = 100;
+
+for 0 : 500
+{
+for 0 : 500
+   {
+   circleCenter = point : x(100) : y(step*50);
+   circle = circle : c(center) : r(rayon);
+      apply display
+      {
+         circle;
+      }
+}
