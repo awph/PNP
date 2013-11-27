@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+   <rect x="100" y="100" width="50" height="30" />
+   <rect x="300" y="100" width="50" height="30" />
+
+   <rect x="100" y="300" width="50" height="30" transform="rotate(45 100,300) scale(3, 2)" />
+   <rect x="300" y="300" width="50" height="30" transform="rotate(45 300,300)" />
+</svg> 
+ 
+</body>
+</html>
+
