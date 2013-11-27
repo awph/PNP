@@ -233,6 +233,85 @@ def p_shape(p):
                 | SHAPE ':' shape_arguments
                 | TEXT ':' text_arguments
     '''
+    p[0] = AST.ShapeNode([p[1], p[3]])
+
+def p_rotate_arguments(p):
+    ''' rotate_arguments : ANGLE '(' IDENTIFIER ')'
+                            | ANGLE '(' INTEGER ')'
+                            | C '(' IDENTIFIER ')'
+                            | C '(' POINT ')'
+    '''
+    p[0] = AST.ArgumentsNode(AST.ArgumentNode([p[1], p[3]]))
+
+def p_rotate_arguments_rec(p):
+    ''' rotate_arguments : ANGLE '(' IDENTIFIER ')' ':' rotate_arguments
+                            | ANGLE '(' INTEGER ')' ':' rotate_arguments
+                            | C '(' IDENTIFIER ')' ':' rotate_arguments
+                            | C '(' POINT ')' ':' rotate_arguments
+    '''
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode([p[1], p[3]]), p[6]])
+
+def p_scale_arguments(p):
+    ''' scale_arguments : SX '(' IDENTIFIER ')'
+                        | SX '(' INTEGER ')'
+                        | SY '(' IDENTIFIER ')'
+                        | SY '(' INTEGER ')'
+    '''
+    p[0] = AST.ArgumentsNode(AST.ArgumentNode([p[1], p[3]]))
+
+def p_scale_arguments_rec(p):
+    ''' scale_arguments : SX '(' IDENTIFIER ')' ':' scale_arguments
+                        | SX '(' INTEGER ')' ':' scale_arguments
+                        | SY '(' IDENTIFIER ')' ':' scale_arguments
+                        | SY '(' INTEGER ')' ':' scale_arguments
+    '''
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode([p[1], p[3]]), p[6]])
+
+def p_translate_arguments(p):
+    ''' translate_argument : P '(' IDENTIFIER ')'
+                            | P '(' POINT ')'
+    '''
+    p[0] = AST.ArgumentsNode(AST.ArgumentNode([p[1], p[3]]))
+
+def p_hide_arguments(p):
+    ''' hide_argument : H '(' IDENTIFIER ')'
+                        | H '(' BOOLEAN ')'
+    '''
+    p[0] = AST.ArgumentsNode(AST.ArgumentNode([p[1], p[3]]))
+
+def p_transformation(p):
+    ''' transformation : ROTATE ':' rotate_arguments
+						| SCALE ':' scale_arguments
+						| TRANSLATE ':' translate_argument
+						| HIDE ':' hide_argument
+    '''
+    p[0] = AST.TransformationNode([p[1], p[3]])
+
+def p_control_if(p):
+    ''' control : IF condition '{' program '}' '''
+    p[0] = AST.IfNode([p[2], p[4]])
+
+def p_control_while(p):
+    ''' control : WHILE condition '{' program '}' '''
+    p[0] = AST.WhileNode([p[2], p[4]])
+
+def p_control_for(p):
+    ''' control : FOR IDENTIFIER ':' IDENTIFIER '{' program '}' '''
+    p[0] = AST.ForNode([p[2], p[4], p[6]])
+
+def p_apply_body(p):
+    ''' apply_body : IDENTIFIER ';'
+    '''
+    p[0] = AST.ApplyBodyNode([p[1]])
+
+def p_apply_body_rec(p):
+    ''' apply_body : IDENTIFIER ';' | apply_body
+    '''
+    p[0] = AST.ApplyBodyNode([p[1]])
+
+def p_control_apply(p):
+    ''' control : APPLY IDENTIFIER '{' apply_body '}' '''
+    p[0] = AST.ApplyNode([p[2], p[4]])
 
 def p_assign(p):
     ''' assignation : IDENTIFIER '=' type '''

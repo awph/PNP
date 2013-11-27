@@ -47,7 +47,6 @@ tokens = (
 	'INTEGER',
 	'BOOLEAN',
 	'STRING',
-    'COLOR_STYLE',
     'ADD_OP',
     'MUL_OP',
     'IDENTIFIER'
@@ -80,12 +79,6 @@ def t_STRING(token):
 	except ValueError:
 		print ("Line %d: Problem while parsing %s!" % (token.lineno,token.value))
 		token.value = ""
-	return token
-
-def t_COLOR_STYLE(token):
-	r'(rgb\(*,*,*\)|hex\(*\)|name\(*\))'
-	if token.value in reserved_words:
-		token.type = token.value.upper()
 	return token
 
 def t_ADD_OP(token):

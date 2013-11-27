@@ -139,6 +139,15 @@ class ArgumentNode(Node):
 class ArgumentsNode(Node):
     type = 'argument'
 
+class ShapeNode(Node):
+    type = "shape"
+
+class TransformationNode(Node):
+    type = "transformation"
+
+class ApplyBodyNode(Node):
+    type = "applybody"
+
 class EntryNode(Node):
     type = 'ENTRY'
     def __init__(self):
