@@ -31,7 +31,7 @@ PHP first version of the language is defined below.
 	r1 = rect : o(<point>) : width(<int>) : height(<int>) : rx(<int>) : ry(<int>) : border-color(<color>) : border-width(<int>) : fill-color(<color>);
 	e1 = ellipse : c(<point>) : ry(<int>) : rx(<int>) : border-color(<color>) : border-width(<int>) : fill-color(<color>);
 	s1 = shape : p(<point>) : p(<point>) : p(<point>) : p(<point>) : ... : border-color(<color>) : border-width(<int>) : close(<bool>) : fill-color(<color>);
-	t1 = text : content(<string>) : p(<point>) : font(<string>) : size(<int>) : color(<color>);
+	t1 = text : content(<string>) : p(<point>) : font(<string>) : size(<int>) : fill-color(<color>);
 
 
 ### Transformations ###
