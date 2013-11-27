@@ -6,10 +6,10 @@ yPos = 100;
 
 for 0 : 500
 {
-   xPos = xPos+(step*rayon);
+   xPos = xPos+rayon;
    for 0 : 500
    {
-      yPos = yPos+(step*rayon);
+      yPos = yPos+rayon;
       circleCenter = point : x(xPos) : y(yPos);
       circle = circle : c(circleCenter) : r(rayon);
       if(xPos == yPos)
