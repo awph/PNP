@@ -1,0 +1,1 @@
+Prints dots as if they were clock hours markers (12 dots in circle)
