@@ -15,6 +15,7 @@ PHP first version of the language is defined below.
 ### Primitive types ###
 	int : integer
 	string : characters
+	boolean : YES or NO
 
 ### Shapes ###
 
