@@ -26,7 +26,7 @@ PHP first version of the language is defined below.
 
 	c0 = color : rgb(<int>, <int>, <int>) : hex(<string>) : name(<string>);
 	p1 = point : x(<int>) : y(<int>);
-	l1 = line : p1(<point>) : p2(<point>) : color(<color>) : width(<int>);
+	l1 = line : p1(<point>) : p2(<point>) : fill-color(<color>) : width(<int>);
 	c1 = circle : c(<point>) : r(<int>) : border-color(<color>) : border-width(<int>) : fill-color(<color>);
 	r1 = rect : o(<point>) : width(<int>) : height(<int>) : rx(<int>) : ry(<int>) : border-color(<color>) : border-width(<int>) : fill-color(<color>);
 	e1 = ellipse : c(<point>) : ry(<int>) : rx(<int>) : border-color(<color>) : border-width(<int>) : fill-color(<color>);
