@@ -1,0 +1,32 @@
+display = hide : h(NO);
+
+w = 40;
+h = w;
+xPos = 100;
+yPos = xPos;
+
+for 0 : 500
+{
+   yPos = yPos + rayon;
+   c = rect : width(w) : height(h);
+   
+   if step == 0
+   {
+      c = rect : width(w) : height(h) : fill_color("blue");
+   }
+   
+   if step == 250
+   {
+      c = rect : width(w) : height(h) : fill_color("red");
+   }
+   
+   if step == 500
+   {
+      c = rect : width(w) : height(h) : fill_color("blue");
+   }
+   
+   apply display
+   {
+      c;
+   }
+}
