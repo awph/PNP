@@ -5,12 +5,17 @@ PNP is a compiler that creates SVG files.
 
 PHP first version of the language is defined below.
 
-### Operators ###
+### Arithmetical operators ###
 	+ : integer addition
 	- : integer subtraction
 	* : integer multiplication
 	/ : integer division
 	= : affectation
+
+### Logical operators ###
+	| : OR
+	& : AND
+	== : equals
 
 ### Primitive types ###
 	int : integer
