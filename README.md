@@ -13,8 +13,8 @@ PHP first version of the language is defined below.
 	= : affectation
 
 ### Logical operators ###
-	| : OR
-	& : AND
+	< : lesser than
+	> : greater than
 	== : equals
 
 ### Primitive types ###
