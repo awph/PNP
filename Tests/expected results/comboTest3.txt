@@ -1,0 +1,1 @@
+A column of 500 rectangles with first and last ones which are blue and the one in the middle shoudl be red.
