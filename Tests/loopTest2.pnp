@@ -6,10 +6,10 @@ i=1;
 while i <= 5
 {
 circleCenter = point : x(100) : y(i*50);
-circle = circle : c(circleCenter) : r(40) : border_color(color2) : border_width(2) : fill_color(color1);
+cir = circle : c(circleCenter) : r(40) : border_color(color2) : border_width(2) : fill_color(color1);
    apply display
    {
-      circle;
+      cir;
    }
 i = i+1;
 }

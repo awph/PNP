@@ -30,7 +30,7 @@ PHP first version of the language is defined below.
 	c1 = circle : c(<point>) : r(<int>) : border_color(<color>) : border_width(<int>) : fill_color(<color>);
 	r1 = rect : o(<point>) : width(<int>) : height(<int>) : rx(<int>) : ry(<int>) : border_color(<color>) : border_width(<int>) : fill_color(<color>);
 	e1 = ellipse : c(<point>) : ry(<int>) : rx(<int>) : border_color(<color>) : border_width(<int>) : fill_color(<color>);
-	s1 = shape : p(<point>) : p(<point>) : p(<point>) : p(<point>) : ... : border_color(<color>) : border_width(<int>) : close(<bool>) : fill_color(<color>);
+	s1 = customshape : p(<point>) : p(<point>) : p(<point>) : p(<point>) : ... : border_color(<color>) : border_width(<int>) : close(<bool>) : fill_color(<color>);
 	t1 = text : content(<string>) : p(<point>) : font(<string>) : size(<int>) : fill_color(<color>);
 
 

@@ -57,7 +57,7 @@ tokens = (
     'IDENTIFIER'
 ) + tuple(map(lambda s:s.upper(),reserved_words))
 
-literals = '():;={}'
+literals = '():,;={}'
 
 def t_INTEGER(token):
 	r'[+-]?\d+'
