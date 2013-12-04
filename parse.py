@@ -260,6 +260,20 @@ def p_transformation(p):
     '''
     p[0] = AST.TransformationNode([p[1], p[3]])
 
+def p_program_statement(p):
+    ''' program : statement '''
+    p[0] = AST.ProgramNode(p[1])
+
+def p_program_rec(p):
+    ''' program : statement ';' program '''
+    p[0] = AST.ProgramNode([p[1]]+p[3].children)
+
+def p_statement(p):
+    ''' statement : assignation
+                    | transformation
+                    | control '''
+    p[0] = p[1]
+
 def p_control_if(p):
     ''' control : IF condition '{' program '}' '''
     p[0] = AST.IfNode([p[2], p[4]])
@@ -286,9 +300,21 @@ def p_control_apply(p):
     ''' control : APPLY IDENTIFIER '{' apply_body '}' '''
     p[0] = AST.ApplyNode([p[2], p[4]])
 
+def p_condition(p):
+    ''' condition : integer_argument COND_OP integer_argument
+                | string_argument COND_OP string_argument
+                | boolean_argument
+    '''
+#TODO
+
 def p_assign(p):
     ''' assignation : IDENTIFIER '=' shape
                     | IDENTIFIER '=' transformation
+                    | IDENTIFIER '=' integer_argument
+                    | IDENTIFIER '=' string_argument
+                    | IDENTIFIER '=' point_argument
+                    | IDENTIFIER '=' color_argument
+                    | IDENTIFIER '=' boolean_argument
     '''
     p[0] = AST.AssignNode([AST.TokenNode(p[1]),p[3]])
 

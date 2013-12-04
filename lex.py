@@ -54,6 +54,7 @@ tokens = (
 	'STRING',
     'ADD_OP',
     'MUL_OP',
+    'COND_OP',
     'IDENTIFIER'
 ) + tuple(map(lambda s:s.upper(),reserved_words))
 
@@ -92,6 +93,10 @@ def t_ADD_OP(token):
 
 def t_MUL_OP(token):
 	r'[*/]'
+	return token
+
+def t_COND_OP(token):
+	r'(==|<=|>=|<|>)'
 	return token
 
 def t_IDENTIFIER(token):
