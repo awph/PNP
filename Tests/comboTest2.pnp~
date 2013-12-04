@@ -18,7 +18,7 @@ for 0 : 500
       }
       apply display
       {
-         cir;
+         circle;
       }
    }
 }

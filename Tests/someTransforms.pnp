@@ -7,7 +7,8 @@ h = 30;
 r1 = rect : o(c1) : width(w) : height(h);
 r2 = rect : o(c2) : width(w) : height(h);
 
-trans = translate : p(0, 200);
+transVect = point : x(0) : y(200);
+trans = translate : p(transVect);
 int a = 45
 rotRect1 = rotate : angle(a) : c(c1);
 rotRect2 = rotate : angle(a) : c(c2);

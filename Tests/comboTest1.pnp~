@@ -11,14 +11,10 @@ for 0 : 500
    {
       yPos = yPos+rayon;
       circleCenter = point : x(xPos) : y(yPos);
-      cir = circle : c(circleCenter) : r(rayon);
-      if(xPos == yPos)
-      {
-         cir = circle : c(circleCenter) : r(rayon) : fill_color("blue");
-      }
+      circle = circle : c(circleCenter) : r(rayon);
       apply display
       {
-         cir;
+         circle;
       }
    }
 }

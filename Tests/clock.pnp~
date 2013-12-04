@@ -2,7 +2,7 @@ display = hide : h(NO);
 clockCenter = point : x(200) : y(200);
 posInit = point : x(200) : y(20);
 rotation = rotate : angle(30) : c(clockCenter);
-hoursMarker = circle : c(posInit) : r(5);
+hoursMarker = circle : c(posInit), r(5);
 
 for 1 : 12
 {
