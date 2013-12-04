@@ -1,12 +1,12 @@
 display = hide : h(NO);
 bw = 3;
-fc = rgb(200, 150, 20);
-p1 = point : x(100) : y(100);
-p2 = point : x(80) : y(50);
-p3 = point : x(100) : y(20);
-p4 = point : x(120) : y(50);
-p5 = point : x(100) : y(100);
-custShape = customshape : p(p1) : p(p2) : p(p3) : p(p4) : p(p5) : border_width(bw) : fill_color(fc);
+fc = color : rgb(200, 150, 20);
+p01 = point : x(100) : y(100);
+p02 = point : x(80) : y(50);
+p03 = point : x(100) : y(20);
+p04 = point : x(120) : y(50);
+p05 = point : x(100) : y(100);
+custShape = customshape : p(p01) : p(p02) : p(p03) : p(p04) : p(p05) : border_width(bw) : fill_color(fc);
 
 apply display
 {

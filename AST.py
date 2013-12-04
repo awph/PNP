@@ -135,9 +135,19 @@ class ApplyNode(Node):
 
 class ArgumentNode(Node):
     type = 'argument'
+    def __init__(self, key, values):
+        Node.__init__(self,values)
+        self.key = key
+        try:
+            self.nbargs = len(self.children)
+        except AttributeError:
+            self.nbargs = 1
+
+    def __repr__(self):
+        return "%s (%s)" % (self.key, self.nbargs)
 
 class ArgumentsNode(Node):
-    type = 'argument'
+    type = 'arguments'
 
 class ShapeNode(Node):
     type = "shape"
@@ -147,6 +157,9 @@ class TransformationNode(Node):
 
 class ApplyBodyNode(Node):
     type = "applybody"
+
+class ConditionalNode(Node):
+    type = "conditional"
 
 class EntryNode(Node):
     type = 'ENTRY'
