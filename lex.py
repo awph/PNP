@@ -38,9 +38,14 @@ reserved_words = (
     'rx',
     'ry',
     'p',
+    'close',
     'content',
     'font',
     'size',
+    'angle',
+    'sx',
+    'sy',
+    'h',
 )
 
 tokens = (
