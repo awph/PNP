@@ -327,8 +327,10 @@ def p_assign(p):
 
 def p_error(p):
     if p:
-        print(p)
-        print ("Syntax error in line %d" % p.lineno)
+        if p.type in tokens:
+            print ("Syntax error in line %d, %s token is reserved word" % (p.lineno, p.type))
+        else:
+            print ("Syntax error in line %d" % p.lineno)
         yacc.errok()
     else:
         print ("Sytax error: unexpected end of file!")
