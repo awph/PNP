@@ -14,7 +14,8 @@ for 0 : 500
       cir = circle : c(circleCenter) : r(rayon);
       if(xPos == yPos)
       {
-         cir = circle : c(circleCenter) : r(rayon) : fill_color("blue");
+         blue = color : name("blue");
+         cir = circle : c(circleCenter) : r(rayon) : fill_color(blue);
       }
       apply display
       {

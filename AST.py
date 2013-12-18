@@ -144,7 +144,7 @@ class ArgumentNode(Node):
             self.nbargs = 1
 
     def __repr__(self):
-        return "%s (%s)" % (self.key, self.nbargs)
+        return "%s" % self.key
 
 class ArgumentsNode(Node):
     type = 'arguments'

@@ -249,7 +249,7 @@ def p_rotate_arguments_rec(p):
     ''' rotate_arguments : ANGLE '(' integer_argument ')' ':' rotate_arguments
                             | C '(' point_argument ')' ':' rotate_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3]), p[6]])
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
 
 def p_scale_arguments(p):
     ''' scale_arguments : SX '(' integer_argument ')'
@@ -261,7 +261,7 @@ def p_scale_arguments_rec(p):
     ''' scale_arguments : SX '(' integer_argument ')' ':' scale_arguments
                         | SY '(' integer_argument ')' ':' scale_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3]), p[6]])
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
 
 def p_translate_arguments(p):
     ''' translate_argument : P '(' point_argument ')'
@@ -341,17 +341,24 @@ yacc.yacc(outputdir='generated')
 
 if __name__ == "__main__":
     import sys
+    path = 'Tests/'
+    ext = '.pnp'
+    files = ['clock', 'comboTest1', 'comboTest2', 'comboTest3', 'customShapeTest', 'helloTest', 'ifTest', 'loopTest', 'loopTest2', 'rotationTest', 'rotationTest2', 'simpleShapesTest', 'someTransforms']
 
-    prog = open(sys.argv[1]).read()
-    result = yacc.parse(prog)
-    print(sys.argv[1])
-    if result:
-        print(result)
-        import os
-        graph = result.makegraphicaltree()
-        name = os.path.splitext(sys.argv[1])[0]+'-ast.pdf'
-        graph.write_pdf(name)
-        print ("wrote ast to", name)
-    else:
-        print ("Parsing returned no result!")
-        exit(-1)
+    for file in files:
+        print('--------------------------------------')
+        print('--------- start ' + file + ' -------------')
+        print('--------------------------------------')
+        fullpath = path + file + ext
+        prog = open(fullpath).read()
+        result = yacc.parse(prog)
+        if result:
+            print(result)
+            import os
+            graph = result.makegraphicaltree()
+            name = os.path.splitext(fullpath)[0]+'-ast.pdf'
+            graph.write_pdf(name)
+            print ("wrote ast to", name)
+        else:
+            print ("Parsing returned no result!")
+            exit(-1)

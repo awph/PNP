@@ -6,7 +6,7 @@ hoursMarker = circle : c(posInit) : r(5);
 
 for 1 : 12
 {
-   apply rotation45
+   apply rotation
    {
       hoursMarker;
    }
