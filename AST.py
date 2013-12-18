@@ -160,6 +160,16 @@ class ApplyBodyNode(Node):
 
 class ConditionalNode(Node):
     type = "conditional"
+    def __init__(self, operator, children):
+        Node.__init__(self,children)
+        self.operator = operator
+        try:
+            self.nbargs = len(children)
+        except AttributeError:
+            self.nbargs = 1
+
+    def __repr__(self):
+        return "%s (%s)" % (self.operator, self.nbargs)
 
 class EntryNode(Node):
     type = 'ENTRY'

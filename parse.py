@@ -22,6 +22,7 @@ def p_statement(p):
 def p_integer_argument(p):
     ''' integer_argument : IDENTIFIER
                         | INTEGER
+                        | STEP
     '''
     p[0] = AST.TokenNode(p[1])
 
@@ -78,7 +79,7 @@ def p_point_arguments_rec(p):
     ''' point_arguments : X '(' integer_argument ')' ':' point_arguments
                         | Y '(' integer_argument ')' ':' point_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3]), p[6]])
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
 
 def p_line_arguments(p):
     ''' line_arguments : P1 '(' point_argument ')'
@@ -94,7 +95,7 @@ def p_line_arguments_rec(p):
 						| FILL_COLOR '(' color_argument ')' ':' line_arguments
 						| WIDTH '(' integer_argument ')' ':' line_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3]), p[6]])
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
 
 def p_circle_arguments(p):
     ''' circle_arguments :  C '(' point_argument ')'
@@ -112,7 +113,7 @@ def p_circle_arguments_rec(p):
                             | BORDER_WIDTH '(' integer_argument ')' ':' circle_arguments
                             | FILL_COLOR '(' color_argument ')' ':' circle_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3]), p[6]])
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
 
 def p_rect_arguments(p):
     ''' rect_arguments :  O '(' point_argument ')'
@@ -136,7 +137,7 @@ def p_rect_arguments_rec(p):
                         | BORDER_WIDTH '(' integer_argument ')' ':' rect_arguments
                         | FILL_COLOR '(' color_argument ')' ':' rect_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3]), p[6]])
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
 
 def p_ellipse_arguments(p):
     ''' ellipse_arguments :  C '(' point_argument ')'
@@ -156,7 +157,7 @@ def p_ellipse_arguments_rec(p):
 							| BORDER_WIDTH '(' integer_argument ')' ':' ellipse_arguments
 							| FILL_COLOR '(' color_argument ')' ':' ellipse_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3]), p[6]])
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
 
 def p_customshape_arguments(p):
     ''' customshape_arguments :  P '(' point_argument ')'
@@ -174,7 +175,7 @@ def p_customshape_arguments_rec(p):
 							| CLOSE '(' boolean_argument ')' ':' customshape_arguments
 							| FILL_COLOR '(' color_argument ')' ':' customshape_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3]), p[6]])
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
 
 def p_text_arguments(p):
     ''' text_arguments :  CONTENT '(' string_argument ')'
@@ -192,7 +193,7 @@ def p_text_arguments_rec(p):
                         | SIZE '(' integer_argument ')' ':' text_arguments
                         | FILL_COLOR '(' color_argument ')' ':' text_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3]), p[6]])
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
 
 def p_color(p):
     ''' color : COLOR ':' color_arguments '''
@@ -289,7 +290,7 @@ def p_control_while(p):
     p[0] = AST.WhileNode([p[2], p[4]])
 
 def p_control_for(p):
-    ''' control : FOR IDENTIFIER ':' IDENTIFIER '{' program '}' '''
+    ''' control : FOR integer_argument ':' integer_argument '{' program '}' '''
     p[0] = AST.ForNode([p[2], p[4], p[6]])
 
 def p_apply_body(p):
@@ -300,7 +301,7 @@ def p_apply_body(p):
 def p_apply_body_rec(p):
     ''' apply_body : IDENTIFIER ';' apply_body
     '''
-    p[0] = AST.ApplyBodyNode([AST.TokenNode(p[1]), p[3]])
+    p[0] = AST.ApplyBodyNode([AST.TokenNode(p[1])] + p[3].children)
 
 def p_control_apply(p):
     ''' control : APPLY IDENTIFIER '{' apply_body '}' '''
@@ -311,7 +312,7 @@ def p_condition(p):
                 | string_argument COND_OP string_argument
                 | boolean_argument
     '''
-    p[0] = AST.ConditionalNode([p[2], p[1], p[3]])
+    p[0] = AST.ConditionalNode(p[2], [p[1], p[3]])
 
 def p_assign(p):
     ''' assignation : IDENTIFIER '=' shape ';'
@@ -326,6 +327,7 @@ def p_assign(p):
 
 def p_error(p):
     if p:
+        print(p)
         print ("Syntax error in line %d" % p.lineno)
         yacc.errok()
     else:
@@ -333,7 +335,7 @@ def p_error(p):
 
 
 def parse(program):
-    return yacc.parse(program)
+    return yacc.parse(program, debug=1)
 
 yacc.yacc(outputdir='generated')
 
@@ -342,6 +344,7 @@ if __name__ == "__main__":
 
     prog = open(sys.argv[1]).read()
     result = yacc.parse(prog)
+    print(sys.argv[1])
     if result:
         print(result)
         import os
@@ -351,3 +354,4 @@ if __name__ == "__main__":
         print ("wrote ast to", name)
     else:
         print ("Parsing returned no result!")
+        exit(-1)

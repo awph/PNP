@@ -4,7 +4,7 @@ rectangleCenter = point : x(200) : y(50);
 color1 = color : name("red");
 color2 = color : name("black");
 circle1 = circle : c(circleCenter) : r(40) : border_color(color2) : border_width(2) : fill_color(color1);
-rectangle1 = rect : o(rectangleCenter) : width(60) : height(40)
+rectangle1 = rect : o(rectangleCenter) : width(60) : height(40);
 
 apply display
 {
