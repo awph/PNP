@@ -152,6 +152,9 @@ class ShapeNode(Node):
 class PointNode(Node):
     type = "point"
 
+class ColorNode(Node):
+    type = "point"
+
 class TransformationNode(Node):
     type = "transformation"
 

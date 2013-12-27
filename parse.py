@@ -73,13 +73,13 @@ def p_point_arguments(p):
     ''' point_arguments : X '(' integer_argument ')'
                         | Y '(' integer_argument ')'
     '''
-    p[0] = AST.ArgumentsNode(AST.ArgumentNode(AST.TokenNode(p[1]), p[3]))
+    p[0] = AST.ArgumentsNode(AST.ArgumentNode(p[1], p[3]))
 
 def p_point_arguments_rec(p):
     ''' point_arguments : X '(' integer_argument ')' ':' point_arguments
                         | Y '(' integer_argument ')' ':' point_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(p[1], p[3])] + p[6].children)
 
 def p_line_arguments(p):
     ''' line_arguments : P1 '(' point_argument ')'
@@ -87,7 +87,7 @@ def p_line_arguments(p):
 						| FILL_COLOR '(' color_argument ')'
 						| WIDTH '(' integer_argument ')'
     '''
-    p[0] = AST.ArgumentsNode(AST.ArgumentNode(AST.TokenNode(p[1]), p[3]))
+    p[0] = AST.ArgumentsNode(AST.ArgumentNode(p[1], p[3]))
 
 def p_line_arguments_rec(p):
     ''' line_arguments : P1 '(' point_argument ')' ':' line_arguments
@@ -95,7 +95,7 @@ def p_line_arguments_rec(p):
 						| FILL_COLOR '(' color_argument ')' ':' line_arguments
 						| WIDTH '(' integer_argument ')' ':' line_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(p[1], p[3])] + p[6].children)
 
 def p_circle_arguments(p):
     ''' circle_arguments :  C '(' point_argument ')'
@@ -104,7 +104,7 @@ def p_circle_arguments(p):
 							| BORDER_WIDTH '(' integer_argument ')'
 							| FILL_COLOR '(' color_argument ')'
     '''
-    p[0] = AST.ArgumentsNode(AST.ArgumentNode(AST.TokenNode(p[1]), p[3]))
+    p[0] = AST.ArgumentsNode(AST.ArgumentNode(p[1], p[3]))
 
 def p_circle_arguments_rec(p):
     ''' circle_arguments :  C '(' point_argument ')' ':' circle_arguments
@@ -113,7 +113,7 @@ def p_circle_arguments_rec(p):
                             | BORDER_WIDTH '(' integer_argument ')' ':' circle_arguments
                             | FILL_COLOR '(' color_argument ')' ':' circle_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(p[1], p[3])] + p[6].children)
 
 def p_rect_arguments(p):
     ''' rect_arguments :  O '(' point_argument ')'
@@ -125,7 +125,7 @@ def p_rect_arguments(p):
                         | BORDER_WIDTH '(' integer_argument ')'
                         | FILL_COLOR '(' color_argument ')'
     '''
-    p[0] = AST.ArgumentsNode(AST.ArgumentNode(AST.TokenNode(p[1]), p[3]))
+    p[0] = AST.ArgumentsNode(AST.ArgumentNode(p[1], p[3]))
 
 def p_rect_arguments_rec(p):
     ''' rect_arguments :  O '(' point_argument ')' ':' rect_arguments
@@ -137,7 +137,7 @@ def p_rect_arguments_rec(p):
                         | BORDER_WIDTH '(' integer_argument ')' ':' rect_arguments
                         | FILL_COLOR '(' color_argument ')' ':' rect_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(p[1], p[3])] + p[6].children)
 
 def p_ellipse_arguments(p):
     ''' ellipse_arguments :  C '(' point_argument ')'
@@ -147,7 +147,7 @@ def p_ellipse_arguments(p):
 							| BORDER_WIDTH '(' integer_argument ')'
 							| FILL_COLOR '(' color_argument ')'
     '''
-    p[0] = AST.ArgumentsNode(AST.ArgumentNode(AST.TokenNode(p[1]), p[3]))
+    p[0] = AST.ArgumentsNode(AST.ArgumentNode(p[1], p[3]))
 
 def p_ellipse_arguments_rec(p):
     ''' ellipse_arguments :  C '(' point_argument ')' ':' ellipse_arguments
@@ -157,7 +157,7 @@ def p_ellipse_arguments_rec(p):
 							| BORDER_WIDTH '(' integer_argument ')' ':' ellipse_arguments
 							| FILL_COLOR '(' color_argument ')' ':' ellipse_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(p[1], p[3])] + p[6].children)
 
 def p_customshape_arguments(p):
     ''' customshape_arguments :  P '(' point_argument ')'
@@ -166,7 +166,7 @@ def p_customshape_arguments(p):
                                 | CLOSE '(' boolean_argument ')'
                                 | FILL_COLOR '(' color_argument ')'
     '''
-    p[0] = AST.ArgumentsNode(AST.ArgumentNode(AST.TokenNode(p[1]), p[3]))
+    p[0] = AST.ArgumentsNode(AST.ArgumentNode(p[1], p[3]))
 
 def p_customshape_arguments_rec(p):
     ''' customshape_arguments :  P '(' point_argument ')' ':' customshape_arguments
@@ -175,7 +175,7 @@ def p_customshape_arguments_rec(p):
 							| CLOSE '(' boolean_argument ')' ':' customshape_arguments
 							| FILL_COLOR '(' color_argument ')' ':' customshape_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(p[1], p[3])] + p[6].children)
 
 def p_text_arguments(p):
     ''' text_arguments :  CONTENT '(' string_argument ')'
@@ -184,7 +184,7 @@ def p_text_arguments(p):
                         | SIZE '(' integer_argument ')'
                         | FILL_COLOR '(' color_argument ')'
     '''
-    p[0] = AST.ArgumentsNode(AST.ArgumentNode(AST.TokenNode(p[1]), p[3]))
+    p[0] = AST.ArgumentsNode(AST.ArgumentNode(p[1], p[3]))
 
 def p_text_arguments_rec(p):
     ''' text_arguments :  CONTENT '(' string_argument ')' ':' text_arguments
@@ -193,15 +193,15 @@ def p_text_arguments_rec(p):
                         | SIZE '(' integer_argument ')' ':' text_arguments
                         | FILL_COLOR '(' color_argument ')' ':' text_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(p[1], p[3])] + p[6].children)
 
 def p_color(p):
     ''' color : COLOR ':' color_arguments '''
-    p[0] = AST.ShapeNode([AST.TokenNode(p[1]), p[3]])
+    p[0] = AST.ColorNode([AST.TokenNode(p[1]), p[3]])
 
 def p_point(p):
     ''' point : POINT ':' point_arguments '''
-    p[0] = AST.ShapeNode([AST.TokenNode(p[1]), p[3]])
+    p[0] = AST.PointNode(p[3])
 
 def p_line(p):
     ''' line : LINE ':' line_arguments '''
@@ -228,9 +228,7 @@ def p_text(p):
     p[0] = AST.ShapeNode([AST.TokenNode(p[1]), p[3]])
 
 def p_shape(p):
-    ''' shape : color
-                | point
-                | line
+    ''' shape : line
                 | circle
                 | rect
                 | ellipse
@@ -243,35 +241,35 @@ def p_rotate_arguments(p):
     ''' rotate_arguments : ANGLE '(' integer_argument ')'
                             | C '(' point_argument ')'
     '''
-    p[0] = AST.ArgumentsNode(AST.ArgumentNode(AST.TokenNode(p[1]), p[3]))
+    p[0] = AST.ArgumentsNode(AST.ArgumentNode(p[1], p[3]))
 
 def p_rotate_arguments_rec(p):
     ''' rotate_arguments : ANGLE '(' integer_argument ')' ':' rotate_arguments
                             | C '(' point_argument ')' ':' rotate_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(p[1], p[3])] + p[6].children)
 
 def p_scale_arguments(p):
     ''' scale_arguments : SX '(' integer_argument ')'
                         | SY '(' integer_argument ')'
     '''
-    p[0] = AST.ArgumentsNode(AST.ArgumentNode(AST.TokenNode(p[1]), p[3]))
+    p[0] = AST.ArgumentsNode(AST.ArgumentNode(p[1], p[3]))
 
 def p_scale_arguments_rec(p):
     ''' scale_arguments : SX '(' integer_argument ')' ':' scale_arguments
                         | SY '(' integer_argument ')' ':' scale_arguments
     '''
-    p[0] = AST.ArgumentsNode([AST.ArgumentNode(AST.TokenNode(p[1]), p[3])] + p[6].children)
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(p[1], p[3])] + p[6].children)
 
 def p_translate_arguments(p):
     ''' translate_argument : P '(' point_argument ')'
     '''
-    p[0] = AST.ArgumentsNode(AST.ArgumentNode(AST.TokenNode(p[1]), p[3]))
+    p[0] = AST.ArgumentsNode(AST.ArgumentNode(p[1], p[3]))
 
 def p_hide_arguments(p):
     ''' hide_argument : H '(' boolean_argument ')'
     '''
-    p[0] = AST.ArgumentsNode(AST.ArgumentNode(AST.TokenNode(p[1]), p[3]))
+    p[0] = AST.ArgumentsNode([AST.ArgumentNode(p[1], p[3])])
 
 def p_transformation(p):
     ''' transformation : ROTATE ':' rotate_arguments
@@ -316,6 +314,8 @@ def p_condition(p):
 
 def p_assign(p):
     ''' assignation : IDENTIFIER '=' shape ';'
+                    | IDENTIFIER '=' point ';'
+                    | IDENTIFIER '=' color ';'
                     | IDENTIFIER '=' transformation ';'
                     | IDENTIFIER '=' integer_argument ';'
                     | IDENTIFIER '=' string_argument ';'
