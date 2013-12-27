@@ -7,7 +7,7 @@ for 1 : 5
 color1 = color : name("red");
 yPos = step*50;
 circleCenter = point : x(100) : y(yPos);
-if (yPos == 100)
+if yPos == 100
    {
    color1 = color : name("blue");
    }

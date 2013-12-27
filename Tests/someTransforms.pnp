@@ -9,7 +9,7 @@ r2 = rect : o(c2) : width(_w) : height(_h);
 
 transVect = point : x(0) : y(200);
 trans = translate : p(transVect);
-int a = 45
+a = 45;
 rotRect1 = rotate : angle(a) : c(c1);
 rotRect2 = rotate : angle(a) : c(c2);
 stretch = scale : sx(3) : sy(2);

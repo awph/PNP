@@ -237,7 +237,7 @@ def p_shape(p):
                 | customshape
                 | text
     '''
-    p[0] = AST.ShapeNode(p[1])
+    p[0] = p[1]
 
 def p_rotate_arguments(p):
     ''' rotate_arguments : ANGLE '(' integer_argument ')'
@@ -331,6 +331,7 @@ def p_error(p):
             print ("Syntax error in line %d, %s token is reserved word" % (p.lineno, p.type))
         else:
             print ("Syntax error in line %d" % p.lineno)
+            print (p)
         yacc.errok()
     else:
         print ("Sytax error: unexpected end of file!")

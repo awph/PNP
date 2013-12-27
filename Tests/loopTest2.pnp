@@ -11,5 +11,5 @@ cir = circle : c(circleCenter) : r(40) : border_color(color2) : border_width(2) 
    {
       cir;
    }
-i = i+1;
+i = i + 1;
 }
