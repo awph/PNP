@@ -96,9 +96,10 @@ class ProgramNode(Node):
         
 class TokenNode(Node):
     type = 'token'
-    def __init__(self, tok):
+    def __init__(self, tok, real_string = False):
         Node.__init__(self)
         self.tok = tok
+        self.real_string = real_string
         
     def __repr__(self):
         return repr(self.tok)
@@ -153,7 +154,7 @@ class PointNode(Node):
     type = "point"
 
 class ColorNode(Node):
-    type = "point"
+    type = "color"
 
 class TransformationNode(Node):
     type = "transformation"

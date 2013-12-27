@@ -1,4 +1,4 @@
-import AST
+import AST, copy
 from svgwrite import text, shapes, drawing
 from AST import addToClass
 from functools import reduce
@@ -36,7 +36,8 @@ conditional_operator = {
 }
 
 vars ={}
-shapes_to_draw = []
+dwg = None
+step = 0
 
 @addToClass(AST.ProgramNode)# Done
 def execute(self):
@@ -45,7 +46,9 @@ def execute(self):
 
 @addToClass(AST.TokenNode)# Done
 def execute(self):
-    if isinstance(self.tok, str):
+    if isinstance(self.tok, str) and not self.real_string:
+        if self.tok.upper() == 'STEP':
+            return step
         try:
             return vars[self.tok]
         except KeyError:
@@ -78,71 +81,106 @@ def execute(self):
 
 @addToClass(AST.ForNode)#TODO step
 def execute(self):
-    for x in range(self.children[0], self.children[1]):
+    for x in range(self.children[0].execute(), self.children[1].execute()):
         self.children[2].execute()
+        global step
+        step = x
 
 @addToClass(AST.ApplyNode)
 def execute(self):
     transformation = self.children[0].execute()
     for shape in self.children[1].execute():
         if transformation.type.upper() == 'ROTATE':
-            shape.rotate(transformation.getArgument('angle'), (transformation.getArgument('c')[0], transformation.getArgument('c')[1]))
+            shape.rotate(transformation['angle'], (transformation['c']['x'], transformation['c']['y']))
         elif transformation.type.upper() == 'SCALE':
-            shape.scale(transformation.getArgument('sx'), transformation.getArgument('sy'))
+            shape.scale(transformation['sx'], transformation['sy'])
         elif transformation.type.upper() == 'TRANSLATE':
-            shape.translate(transformation.getArgument('p')[0], transformation.getArgument('p')[1])
+            shape.translate(transformation['p'][0]['x'], transformation['p'][0]['y'])
         elif transformation.type.upper() == 'HIDE':
             shape['visibility'] = 'hidden' if transformation['h'] else 'visible'
+            dwg.add(shape.copy())
 
 
 @addToClass(AST.ArgumentNode)
 def execute(self):
-    return [self.key, self.children[0].execute()]
+    if len(self.children) > 1:
+        args = [c.execute() for c in self.children]
+    else:
+        args = self.children[0].execute()
+    return [self.key, args]
 
 @addToClass(AST.ArgumentsNode)
 def execute(self):
     arguments = {}
     for argument in self.children:
-        arguments[argument.execute()[0]] = argument.execute()[1]
+        if argument.execute()[0] == 'p':
+            if 'p' in arguments:
+                arguments[argument.execute()[0]].append(argument.execute()[1])
+            else:
+                arguments[argument.execute()[0]] = [argument.execute()[1]]
+        else:
+            arguments[argument.execute()[0]] = argument.execute()[1]
     return arguments
 
 @addToClass(AST.ShapeNode)
 def execute(self):
     shape_type = self.children[0].execute()
-    arguments = self.children[1].execute()
+    arguments = copy.deepcopy(self.children[1].execute())
+    if 'fill_color' in arguments:
+        arguments['fill'] = arguments.pop('fill_color')
+    if 'border_width' in arguments:
+        arguments['stroke-width'] = arguments.pop('border_width')
+    if 'border_color' in arguments:
+        arguments['stroke'] = arguments.pop('border_color')
     shape = None
     if shape_type.upper() == 'LINE':
         shape = shapes.Line()
     elif shape_type.upper() == 'CIRCLE':
+        if 'c' in arguments:
+            center = arguments.pop('c')
+            arguments['cx'] = center.pop('x')
+            arguments['cy'] = center.pop('y')
         shape = shapes.Circle()
     elif shape_type.upper() == 'RECT':
+        if 'o' in arguments:
+            center = arguments.pop('o')
+            arguments['x'] = center.pop('x')
+            arguments['y'] = center.pop('y')
         shape = shapes.Rect()
     elif shape_type.upper() == 'ELLIPSE':
         shape = shapes.Ellipse()
     elif shape_type.upper() == 'CUSTOMSHAPE':
-        shape = shapes.Polygon()
+        points = []
+        for point in arguments.pop('p'):
+            points.append((point.pop('x'), point.pop('y')))
+        shape = shapes.Polygon(points)
     elif shape_type.upper() == 'TEXT':
         shape = text.Text(arguments.pop('content'))
-        center = arguments.pop('p')
-        arguments['x'] = center.pop('x')
-        arguments['y'] = center.pop('y')
+        if 'p' in arguments:
+            center = arguments.pop('p')[0]
+            arguments['x'] = center.pop('x')
+            arguments['y'] = center.pop('y')
     else:
         print("Error: shape type %s undefined!" % shape_type)
 
-    print(type(shape))
     shape.update(arguments)
-    shapes_to_draw.append(shape)
     return shape
 
 @addToClass(AST.PointNode)
 def execute(self):
     arguments = self.children[0].execute()
-    return {'x' : arguments["x"], 'y': arguments["y"]}
+    return {'x': arguments["x"], 'y': arguments["y"]}
 
 @addToClass(AST.ColorNode)
 def execute(self):
-    arguments = self.children[0].execute()
-    return arguments
+    arguments = self.children[1].execute()
+    type = arguments[0].execute().upper()
+    if type == 'NAME':
+        return arguments[1].execute()
+    elif type == 'HEX':
+        return 'hex(%s)' % arguments[1].execute()
+    elif type == 'RGB':
+        return "rgb(%d,%d,%d)" % (int(arguments[1][0].execute()), int(arguments[1][1].execute()), int(arguments[1][2].execute()))
 
 @addToClass(AST.TransformationNode)
 def execute(self):
@@ -163,7 +201,7 @@ def execute(self):
         return self.children[0].execute()
     else:
         args = [c.execute() for c in self.children]
-        return reduce(operator[self.op], args)
+        return reduce(conditional_operator[self.operator], args)
 
 if __name__ == "__main__":
     from parse import parse
@@ -172,7 +210,6 @@ if __name__ == "__main__":
     path = 'Tests/'
     ext = '.pnp'
     files = ['clock', 'comboTest1', 'comboTest2', 'comboTest3', 'customShapeTest', 'helloTest', 'ifTest', 'loopTest', 'loopTest2', 'rotationTest', 'rotationTest2', 'simpleShapesTest', 'someTransforms']
-    files = ['helloTest']
 
     for file in files:
         print('--------------------------------------')
@@ -180,10 +217,8 @@ if __name__ == "__main__":
         print('--------------------------------------')
         fullpath = path + file + ext
         prog = open(fullpath).read()
+        vars ={}
+        dwg = drawing.Drawing(filename=file+'.svg', debug=False, profile='tiny')
         ast = parse(prog)
         ast.execute()
-
-        dwg = drawing.Drawing(filename=file+'.svg', debug=False, profile='tiny')
-        for shape in shapes_to_draw:
-            dwg.add(shape)
         dwg.save()

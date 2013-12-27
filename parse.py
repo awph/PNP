@@ -32,10 +32,12 @@ def p_integer_argument_operator(p):
     '''
     p[0] = AST.OpNode(p[2], [p[1], p[3]])
 
-def p_string_argument(p):
-    ''' string_argument : IDENTIFIER
-                        | STRING
-    '''
+def p_string_argument_STRING(p):
+    ''' string_argument : STRING '''
+    p[0] = AST.TokenNode(p[1], True)
+
+def p_string_argument_ID(p):
+    ''' string_argument : IDENTIFIER '''
     p[0] = AST.TokenNode(p[1])
 
 def p_point_argument(p):
@@ -63,11 +65,13 @@ def p_color_arguments(p):
     '''
     key = p[1]
     value = []
+    is_string = False
     if len(p) == 5:
         value = p[3]
+        is_string = True
     elif len(p) == 9:
         value = [p[3], p[5], p[7]]
-    p[0] = AST.ArgumentNode(AST.TokenNode(key), value) #TODO:
+    p[0] = AST.ArgumentNode(AST.TokenNode(key), AST.TokenNode(value, is_string)) #TODO:
 
 def p_point_arguments(p):
     ''' point_arguments : X '(' integer_argument ')'
@@ -338,7 +342,7 @@ def p_error(p):
 
 
 def parse(program):
-    return yacc.parse(program, debug=1)
+    return yacc.parse(program)#, debug=1
 
 yacc.yacc(outputdir='generated')
 

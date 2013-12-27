@@ -5,7 +5,9 @@ _h = _w;
 xPos = 100;
 yPos = xPos;
 
-for 0 : 500
+rayon = 10;
+
+for 0 : 5
 {
    yPos = yPos + rayon;
    _c = rect : width(_w) : height(_h);
@@ -16,13 +18,13 @@ for 0 : 500
       _c = rect : width(_w) : height(_h) : fill_color(blue);
    }
    
-   if step == 250
+   if step == 2
    {
       red = color : name("red");
       _c = rect : width(_w) : height(_h) : fill_color(red);
    }
    
-   if step == 500
+   if step == 5
    {
       blue = color : name("blue");
       _c = rect : width(_w) : height(_h) : fill_color(blue);

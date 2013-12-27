@@ -4,10 +4,10 @@ rayon = 40;
 xPos = 100;
 yPos = 100;
 
-for 0 : 500
+for 0 : 5
 {
    xPos = xPos+rayon;
-   for 0 : 500
+   for 0 : 5
    {
       yPos = yPos+rayon;
       circleCenter = point : x(xPos) : y(yPos);
