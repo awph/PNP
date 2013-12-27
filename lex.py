@@ -81,7 +81,7 @@ def t_BOOLEAN(token):
 def t_STRING(token):
 	r'".+"'
 	try:
-		token.value = str(token.value)
+		token.value = str(token.value)[1:-1]
 	except ValueError:
 		print ("Line %d: Problem while parsing %s!" % (token.lineno,token.value))
 		token.value = ""

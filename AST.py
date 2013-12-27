@@ -117,10 +117,7 @@ class OpNode(Node):
     
 class AssignNode(Node):
     type = '='
-    
-class PrintNode(Node):
-    type = 'print'
-    
+
 class WhileNode(Node):
     type = 'while'
 
@@ -151,6 +148,9 @@ class ArgumentsNode(Node):
 
 class ShapeNode(Node):
     type = "shape"
+
+class PointNode(Node):
+    type = "point"
 
 class TransformationNode(Node):
     type = "transformation"
