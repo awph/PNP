@@ -27,6 +27,7 @@ operator = {
     '-': lambda x, y: x-y,
     '*': lambda x, y: x*y,
     '/': lambda x, y: x/y,
+    '%': lambda x, y: x%y,
 }
 
 conditional_operator = {
@@ -225,8 +226,8 @@ if __name__ == "__main__":
 
     path = 'Tests/'
     ext = '.pnp'
-    files = ['clock', 'comboTest1', 'comboTest2', 'comboTest3', 'customShapeTest', 'helloTest', 'ifTest', 'loopTest', 'loopTest2', 'rotationTest', 'rotationTest2', 'simpleShapesTest', 'someTransforms']
-    files = ['comboTest3']
+    files = ['clock', 'comboTest1', 'comboTest2', 'comboTest3', 'customShapeTest', 'helloTest', 'ifTest', 'loopTest', 'loopTest2', 'rotationTest', 'rotationTest2', 'simpleShapesTest', 'someTransforms', 'gradient', 'modulo']
+    files = ['modulo']
 
     for file in files:
         print('--------------------------------------')

@@ -92,7 +92,7 @@ def t_ADD_OP(token):
 	return token
 
 def t_MUL_OP(token):
-	r'[*/]'
+	r'[*/%]'
 	return token
 
 def t_COND_OP(token):
