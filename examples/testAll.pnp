@@ -1,0 +1,66 @@
+myInteger = 10;
+myColorName = "blue";
+myColor1 = color : rgb(myInteger, 40, 40);
+myColor3 = color : name("red");
+myColor4 = color : name(myColorName);
+myPoint1 = point : x(30) : y(40);
+myPoint2 = point : x(200) : y(300);
+myPoint3 = point : x(200) : y(300);
+myCircle = circle : c(myPoint1) : r(20) : border_color(myColor1) : border_width(5) : fill_color(myColor3);
+myRect = rect : o(myPoint1) : width(100) : height(200) : rx(10) : ry(40) : border_color(myColor4) : border_width(20) : fill_color(myColor1);
+
+myRotation = rotate : angle(45) : c(myPoint1);
+myScale = scale : sx(2) : sy(3);
+myTranslation = translate : p(myPoint3);
+show = hide : h(NO);
+
+apply myRotation
+{
+   myRect;
+}
+
+apply myScale
+{
+   myCircle;
+}
+
+apply myTranslation
+{
+   myCircle;
+}
+
+apply show
+{
+   myCircle;
+   myRect;
+}
+
+for 100:120
+{
+   myShape = rect : o(myPoint1) : width(100) : height(200) : fill_color(myColor1);
+   if step > 105
+   {
+      if step < 115
+	  {
+	     myShape = rect : o(myPoint1) : width(100) : height(200) : fill_color(myColor3);	     
+	  }
+   }
+   
+   apply show
+   {
+      myShape;
+   }
+}
+
+i=1;
+while i <= 5
+{
+   circleCenter = point : x(100) : y(i*50);
+   cir = circle : c(circleCenter) : r(40) : border_color(myColor1) : border_width(2) : fill_color(myColor1);
+   apply show
+   {
+      cir;
+   }
+   i = i + 1;
+}
+

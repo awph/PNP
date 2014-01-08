@@ -1,0 +1,17 @@
+display = hide : h(NO);
+
+for 0 : 100
+{
+	_r = 10;
+	if step % 10 == 0
+	{
+		_r = 20;
+	}
+	_circleCenter = point : x(step * 2 * _r) : y(step * 2 *  _r);
+	_color = color : rgb(255, 0, 0);
+	_cir = circle : c(_circleCenter) : r(_r) : fill_color(_color);
+	apply display
+	{
+		 _cir;
+	}
+}

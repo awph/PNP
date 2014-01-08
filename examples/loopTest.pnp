@@ -1,0 +1,13 @@
+display = hide : h(NO);
+color1 = color : name("red");
+color2 = color : name("black");
+
+for 1 : 5
+{
+circleCenter = point : x(100) : y(step*50);
+cir = circle : c(circleCenter) : r(40) : border_color(color2) : border_width(2) : fill_color(color1);
+   apply display
+   {
+      cir;
+   }
+}

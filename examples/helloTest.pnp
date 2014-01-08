@@ -1,0 +1,9 @@
+display = hide : h(NO);
+posText = point : x(20) : y(20);
+helloText = text : content("Hello world") : p(posText);
+
+apply display
+{
+   helloText;
+}
+

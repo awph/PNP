@@ -145,8 +145,6 @@ def execute(self):
         arguments['stroke-width'] = arguments.pop('border_width')
     if 'border_color' in arguments:
         arguments['stroke'] = arguments.pop('border_color')
-    if 'width' in arguments:
-        arguments['stroke-width'] = arguments.pop('width')
     if 'c' in arguments:
         center = arguments.pop('c')
         arguments['cx'] = center.pop('x')
@@ -160,6 +158,8 @@ def execute(self):
 
     if shape_type.upper() == 'LINE':
         shape = shapes.Line()
+        if 'width' in arguments:
+            arguments['stroke-width'] = arguments.pop('width')
         if 'fill' in arguments:
             arguments['stroke'] = arguments.pop('fill')
         if 'p1' in arguments:
@@ -252,22 +252,55 @@ def execute(self):
         args = [c.execute() for c in self.children]
         return reduce(conditional_operator[self.operator], args)
 
+def displayMenu(files):
+    examples = ' | '.join(files)
+
+    print('')
+    print('')
+    print('-----------------------------------------------')
+    print('--------- Welcome -- PNP Compiler -------------')
+    print('-----------------------------------------------')
+    print('-------------- Alexandre Perez & Mirco Nasuti -')
+    print('')
+    print('Compile a PNP file by typing: compile <filepath>')
+    print('Exit by typing: exit')
+    print('')
+    print('You can try some examples by typing : ')
+    print('compile examples/'+examples)
+
+
+def compile(filepath):
+    import os
+    if not os.path.exists(filepath):
+        print("File not found")
+        return
+    global dwg
+    filename = os.path.basename(filepath)[:-4]
+    print('start compiling: ' + filename)
+    prog = open(filepath).read()
+    vars = {}
+    dwg = drawing.Drawing(filename=filename+'.svg', debug=False, profile='tiny')
+    ast = parse(prog)
+    ast.execute()
+    dwg.save()
+    print('Compiled and saved in: ' + filename + '.svg')
+
 if __name__ == "__main__":
     from parse import parse
 
-    path = 'Tests/'
-    ext = '.pnp'
-    files = ['clock', 'comboTest1', 'comboTest2', 'comboTest3', 'customShapeTest', 'helloTest', 'ifTest', 'loopTest', 'loopTest2', 'rotationTest', 'rotationTest2', 'simpleShapesTest', 'someTransforms', 'gradient', 'modulo']
-    files = ['BUGSACORRIGER']
+    path = 'examples/'
+    ext = 'pnp'
+    from os import listdir
+    from os.path import isfile, join
+    files = [ f for f in listdir(path) if isfile(join(path,f)) and f[-3:].upper() == ext.upper() ]
 
-    for file in files:
-        print('--------------------------------------')
-        print('--------- start ' + file + ' -------------')
-        print('--------------------------------------')
-        fullpath = path + file + ext
-        prog = open(fullpath).read()
-        vars = {}
-        dwg = drawing.Drawing(filename=file+'.svg', debug=False, profile='tiny')
-        ast = parse(prog)
-        ast.execute()
-        dwg.save()
+    inputValue = ''
+    while not inputValue.__eq__('exit'):
+        displayMenu(files)
+        inputValue = input('PNP > ')
+        if inputValue.startswith('compile '):
+            try:
+                compile(inputValue[8:])
+            except:
+                import sys
+                print("Error:", sys.exc_info()[0])

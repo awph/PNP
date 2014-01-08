@@ -1,0 +1,25 @@
+display = hide : h(NO);
+
+rayon = 40;
+xPos = 100;
+yPos = 100;
+
+for 0 : 5
+{
+   xPos = xPos+rayon;
+   for 0 : 5
+   {
+      yPos = yPos+rayon;
+      circleCenter = point : x(xPos) : y(yPos);
+      cir = circle : c(circleCenter) : r(rayon);
+      if xPos == yPos
+      {
+         blue = color : name("blue");
+         cir = circle : c(circleCenter) : r(rayon) : fill_color(blue);
+      }
+      apply display
+      {
+         cir;
+      }
+   }
+}

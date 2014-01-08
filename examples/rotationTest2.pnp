@@ -1,0 +1,16 @@
+display = hide : h(NO);
+posText = point : x(200) : y(200);
+rotCenter = point : x(0) : y(0);
+rotation45 = rotate : angle(45) : c(rotCenter);
+myText = text : content("Rotation") : p(posText);
+
+apply rotation45
+{
+   myText;
+}
+
+apply display
+{
+   myText;
+}
+

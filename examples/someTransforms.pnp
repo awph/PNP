@@ -1,0 +1,40 @@
+display = hide : h(NO);
+
+c1 = point : x(100) : y(100);
+c2 = point : x(300) : y(100);
+_w = 50;
+_h = 30;
+r1 = rect : o(c1) : width(_w) : height(_h);
+r2 = rect : o(c2) : width(_w) : height(_h);
+
+transVect = point : x(0) : y(200);
+trans = translate : p(transVect);
+a = 45;
+rotRect1 = rotate : angle(a) : c(c1);
+rotRect2 = rotate : angle(a) : c(c2);
+stretch = scale : sx(3) : sy(2);
+
+apply display
+{
+   r1;
+   r2;
+}
+
+apply rotRect1
+{
+   r1;
+   r2;
+}
+
+apply trans
+{
+   r1;
+   r2;
+}
+
+apply display
+{
+   r1;
+   r2;
+}
+
