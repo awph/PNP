@@ -79,7 +79,7 @@ def t_BOOLEAN(token):
 	return token
 
 def t_STRING(token):
-	r'".+"'
+	r'"(?:[^"\\]|\\.)*"'
 	try:
 		token.value = str(token.value)[1:-1]
 	except ValueError:

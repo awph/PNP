@@ -1,6 +1,0 @@
-myBoolean = NO;
-myColor2 = color : hex("FF00FF");
-myLine = line : p1(myPoint1) : p2(myPoint2) : fill_color(myColor2) : width(10);
-myEllipse = ellipse : c(myPoint1) : rx(20) : ry(40) : border_color(myColor1) : border_width(5) : fill_color(myColor3);
-myCustomShape = customshape : p(myPoint1) : p(myPoint2) : p(myPoint3) : border_color(myColor1) : border_width(30) : close(YES) : fill_color(myColor1);
-myText = text : content("test") : p(myPoint1) : font("arial") : size(12) : fill_color(myColor1);
