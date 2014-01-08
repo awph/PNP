@@ -1,124 +1,216 @@
-program : statement
+program : statement 
+
+program : statement program 
+
+statement : assignation
+				| transformation
+				| control 
+				
+integer_argument : IDENTIFIER
+					| INTEGER
+					| STEP
 
 
+integer_argument : integer_argument ADD_OP integer_argument
+					| integer_argument MUL_OP integer_argument
 
-color_arguments : RGB '(' IDENTIFIER ',' IDENTIFIER ',' IDENTIFIER ')'
-							| RGB '(' INTEGER ',' IDENTIFIER ',' IDENTIFIER ')'
-							| RGB '(' IDENTIFIER ',' INTEGER ',' IDENTIFIER ')'
-							| RGB '(' IDENTIFIER ',' IDENTIFIER ',' INTEGER ')'
-							| RGB '(' INTEGER ',' INTEGER ',' IDENTIFIER ')'
-							| RGB '(' INTEGER ',' IDENTIFIER ',' INTEGER ')'
-							| RGB '(' IDENTIFIER ',' INTEGER ',' INTEGER ')'
-							| RGB '(' INTEGER ',' INTEGER ',' INTEGER ')'
-							| HEX '(' IDENTIFIER ')'
-							| HEX '(' STRING ')'
-							| NAME '(' IDENTIFIER ')'
-							| NAME '(' STRING ')'
-							 
-point_arguments : X '(' IDENTIFIER ')' ':' point_arguments
-							| X '(' INTEGER ')' ':' point_arguments
-							| Y '(' IDENTIFIER ')' ':' point_arguments
-							| Y '(' INTEGER ')' ':' point_arguments
-							
-line_arguments : P1 '(' IDENTIFIER ')' ':' line_arguments
-						| P1 '(' POINT ')' ':' line_arguments
-						| P2 '(' IDENTIFIER ')' ':' line_arguments
-						| P2 '(' POINT ')' ':' line_arguments
-						| FILL_COLOR '(' IDENTIFIER ')' ':' line_arguments
-						| FILL_COLOR '(' COLOR ')' ':' line_arguments
-						| WIDTH '(' IDENTIFIER ')' ':' line_arguments
-						| WIDTH '(' INTEGER ')' ':' line_arguments
-						
-circle_arguments :  C '(' IDENTIFIER ')' ':' circle_arguments
-							| C '(' POINT ')' ':' circle_arguments
-							| R '(' IDENTIFIER ')' ':' circle_arguments
-							| R '(' INTEGER ')' ':' circle_arguments
-							| BORDER_COLOR '(' IDENTIFIER ')' ':' circle_arguments
-							| BORDER_COLOR '(' COLOR ')' ':' circle_arguments
-							| BORDER_WIDTH '(' IDENTIFIER ')' ':' circle_arguments
-							| BORDER_WIDTH '(' INTEGER ')' ':' circle_arguments
-							| FILL_COLOR '(' IDENTIFIER ')' ':' circle_arguments
-							| FILL_COLOR '(' COLOR ')' ':' circle_arguments
-rect_arguments :  O '(' IDENTIFIER ')' ':' rect_arguments
-							| O '(' POINT ')' ':' rect_arguments
-							| WIDTH '(' IDENTIFIER ')' ':' rect_arguments
-							| WIDTH '(' INTEGER ')' ':' rect_arguments
-							| HEIGHT '(' IDENTIFIER ')' ':' rect_arguments
-							| HEIGHT '(' INTEGER ')' ':' rect_arguments
-							| RX '(' IDENTIFIER ')' ':' rect_arguments
-							| RX '(' INTEGER ')' ':' rect_arguments
-							| RY '(' IDENTIFIER ')' ':' rect_arguments
-							| RY '(' INTEGER ')' ':' rect_arguments
-							| BORDER_COLOR '(' IDENTIFIER ')' ':' rect_arguments
-							| BORDER_COLOR '(' COLOR ')' ':' rect_arguments
-							| BORDER_WIDTH '(' IDENTIFIER ')' ':' rect_arguments
-							| BORDER_WIDTH '(' INTEGER ')' ':' rect_arguments
-							| FILL_COLOR '(' IDENTIFIER ')' ':' rect_arguments
-							| FILL_COLOR '(' COLOR ')' ':' rect_arguments
-ellipse_arguments :  C '(' IDENTIFIER ')' ':' ellipse_arguments
-							| C '(' POINT ')' ':' ellipse_arguments
-							| RY '(' IDENTIFIER ')' ':' ellipse_arguments
-							| RY '(' INTEGER ')' ':' ellipse_arguments
-							| RX '(' IDENTIFIER ')' ':' ellipse_arguments
-							| RX '(' INTEGER ')' ':' ellipse_arguments
-							| BORDER_COLOR '(' IDENTIFIER ')' ':' ellipse_arguments
-							| BORDER_COLOR '(' COLOR ')' ':' ellipse_arguments
-							| BORDER_WIDTH '(' IDENTIFIER ')' ':' ellipse_arguments
-							| BORDER_WIDTH '(' INTEGER ')' ':' ellipse_arguments
-							| FILL_COLOR '(' IDENTIFIER ')' ':' ellipse_arguments
-							| FILL_COLOR '(' COLOR ')' ':' ellipse_arguments
-shape_arguments :  P '(' IDENTIFIER ')' ':' shape_arguments
-							| P '(' POINT ')' ':' shape_arguments
-							| BORDER_COLOR '(' IDENTIFIER ')' ':' shape_arguments
-							| BORDER_COLOR '(' COLOR ')' ':' shape_arguments
-							| BORDER_WIDTH '(' IDENTIFIER ')' ':' shape_arguments
-							| BORDER_WIDTH '(' INTEGER ')' ':' shape_arguments
-							| CLOSE '(' IDENTIFIER ')' ':' shape_arguments
-							| CLOSE '(' BOOLEAN ')' ':' shape_arguments
-							| FILL_COLOR '(' IDENTIFIER ')' ':' shape_arguments
-							| FILL_COLOR '(' COLOR ')' ':' shape_arguments
-text_arguments :  CONTENT '(' IDENTIFIER ')' ':' text_arguments
-							| CONTENT '(' INTEGER ')' ':' text_arguments
-							| P '(' IDENTIFIER ')' ':' text_arguments
-							| P '(' INTEGER ')' ':' text_arguments
-							| FONT '(' IDENTIFIER ')' ':' text_arguments
-							| FONT '(' INTEGER ')' ':' text_arguments
-							| SIZE '(' IDENTIFIER ')' ':' text_arguments
-							| SIZE '(' INTEGER ')' ':' text_arguments
-							| FILL_COLOR '(' IDENTIFIER ')' ':' text_arguments
-							| FILL_COLOR '(' COLOR ')' ':' text_arguments
-								
-shape : COLOR ':' color_arguments
-			| POINT ':' point_arguments
-			| LINE ':' line_arguments
-			| CIRCLE ':' circle_arguments
-			| RECT ':' rect_arguments
-			| ELLIPSE ':' ellipse_arguments
-			| SHAPE ':' shape_arguments
-			| TEXT ':' text_arguments
 
-rotate_arguments : ANGLE '(' IDENTIFIER ')'  rotate_arguments
-								| ANGLE '(' INTEGER ')'  rotate_arguments
-								| C '(' IDENTIFIER ')'  rotate_arguments
-								| C '(' POINT ')'  rotate_arguments
+string_argument : STRING 
 
-scale_arguments : SX '(' IDENTIFIER ')'  scale_arguments
-								| SX '(' INTEGER ')'  scale_arguments
-								| SY '(' IDENTIFIER ')'  scale_arguments
-								| SY '(' INTEGER ')'  scale_arguments
+string_argument : IDENTIFIER 
 
-translate_arguments : P '(' IDENTIFIER ')'  translate_arguments
-								| P '(' POINT ')'  translate_arguments
+point_argument : IDENTIFIER
+					| POINT
 
-hide_arguments : H '(' IDENTIFIER ')'  hide_arguments
-							| H '(' BOOLEAN ')'  hide_arguments
-								
+
+color_argument : IDENTIFIER
+					| COLOR
+
+
+boolean_argument : IDENTIFIER
+					| BOOLEAN
+
+
+color_arguments : RGB '(' integer_argument ',' integer_argument ',' integer_argument ')'
+						| HEX '(' string_argument ')'
+						| NAME '(' string_argument ')'
+
+
+point_arguments : X '(' integer_argument ')'
+					| Y '(' integer_argument ')'
+
+
+point_arguments : X '(' integer_argument ')' ':' point_arguments
+					| Y '(' integer_argument ')' ':' point_arguments
+
+
+line_arguments : P1 '(' point_argument ')'
+					| P2 '(' point_argument ')'
+					| FILL_COLOR '(' color_argument ')'
+					| WIDTH '(' integer_argument ')'
+
+
+line_arguments : P1 '(' point_argument ')' ':' line_arguments
+					| P2 '(' point_argument ')' ':' line_arguments
+					| FILL_COLOR '(' color_argument ')' ':' line_arguments
+					| WIDTH '(' integer_argument ')' ':' line_arguments
+
+
+circle_arguments :  C '(' point_argument ')'
+						| R '(' integer_argument ')'
+						| BORDER_COLOR '(' color_argument ')'
+						| BORDER_WIDTH '(' integer_argument ')'
+						| FILL_COLOR '(' color_argument ')'
+
+
+circle_arguments :  C '(' point_argument ')' ':' circle_arguments
+						| R '(' integer_argument ')' ':' circle_arguments
+						| BORDER_COLOR '(' color_argument ')' ':' circle_arguments
+						| BORDER_WIDTH '(' integer_argument ')' ':' circle_arguments
+						| FILL_COLOR '(' color_argument ')' ':' circle_arguments
+
+
+rect_arguments :  O '(' point_argument ')'
+					| WIDTH '(' integer_argument ')'
+					| HEIGHT '(' integer_argument ')'
+					| RX '(' integer_argument ')'
+					| RY '(' integer_argument ')'
+					| BORDER_COLOR '(' color_argument ')'
+					| BORDER_WIDTH '(' integer_argument ')'
+					| FILL_COLOR '(' color_argument ')'
+
+
+rect_arguments :  O '(' point_argument ')' ':' rect_arguments
+					| WIDTH '(' integer_argument ')' ':' rect_arguments
+					| HEIGHT '(' integer_argument ')' ':' rect_arguments
+					| RX '(' integer_argument ')' ':' rect_arguments
+					| RY '(' integer_argument ')' ':' rect_arguments
+					| BORDER_COLOR '(' color_argument ')' ':' rect_arguments
+					| BORDER_WIDTH '(' integer_argument ')' ':' rect_arguments
+					| FILL_COLOR '(' color_argument ')' ':' rect_arguments
+
+
+ellipse_arguments :  C '(' point_argument ')'
+						| RY '(' integer_argument ')'
+						| RX '(' integer_argument ')'
+						| BORDER_COLOR '(' color_argument ')'
+						| BORDER_WIDTH '(' integer_argument ')'
+						| FILL_COLOR '(' color_argument ')'
+
+
+ellipse_arguments :  C '(' point_argument ')' ':' ellipse_arguments
+						| RY '(' integer_argument ')' ':' ellipse_arguments
+						| RX '(' integer_argument ')' ':' ellipse_arguments
+						| BORDER_COLOR '(' color_argument ')' ':' ellipse_arguments
+						| BORDER_WIDTH '(' integer_argument ')' ':' ellipse_arguments
+						| FILL_COLOR '(' color_argument ')' ':' ellipse_arguments
+
+
+customshape_arguments :  P '(' point_argument ')'
+							| BORDER_COLOR '(' color_argument ')'
+							| BORDER_WIDTH '(' integer_argument ')'
+							| CLOSE '(' boolean_argument ')'
+							| FILL_COLOR '(' color_argument ')'
+
+
+customshape_arguments :  P '(' point_argument ')' ':' customshape_arguments
+						| BORDER_COLOR '(' color_argument ')' ':' customshape_arguments
+						| BORDER_WIDTH '(' integer_argument ')' ':' customshape_arguments
+						| CLOSE '(' boolean_argument ')' ':' customshape_arguments
+						| FILL_COLOR '(' color_argument ')' ':' customshape_arguments
+
+
+text_arguments :  CONTENT '(' string_argument ')'
+					| P '(' point_argument ')'
+					| FONT '(' string_argument ')'
+					| SIZE '(' integer_argument ')'
+					| FILL_COLOR '(' color_argument ')'
+
+
+text_arguments :  CONTENT '(' string_argument ')' ':' text_arguments
+					| P '(' point_argument ')' ':' text_arguments
+					| FONT '(' string_argument ')' ':' text_arguments
+					| SIZE '(' integer_argument ')' ':' text_arguments
+					| FILL_COLOR '(' color_argument ')' ':' text_arguments
+
+
+color : COLOR ':' color_arguments 
+
+point : POINT ':' point_arguments 
+
+line : LINE ':' line_arguments 
+
+circle : CIRCLE ':' circle_arguments 
+
+rect : RECT ':' rect_arguments 
+
+ellipse : ELLIPSE ':' ellipse_arguments 
+
+customshape : CUSTOMSHAPE ':' customshape_arguments 
+
+text : TEXT ':' text_arguments 
+
+shape : line
+			| circle
+			| rect
+			| ellipse
+			| customshape
+			| text
+
+
+rotate_arguments : ANGLE '(' integer_argument ')'
+						| C '(' point_argument ')'
+
+
+rotate_arguments : ANGLE '(' integer_argument ')' ':' rotate_arguments
+						| C '(' point_argument ')' ':' rotate_arguments
+
+
+scale_arguments : SX '(' integer_argument ')'
+					| SY '(' integer_argument ')'
+
+
+scale_arguments : SX '(' integer_argument ')' ':' scale_arguments
+					| SY '(' integer_argument ')' ':' scale_arguments
+
+
+translate_argument : P '(' point_argument ')'
+
+
+hide_argument : H '(' boolean_argument ')'
+
+
 transformation : ROTATE ':' rotate_arguments
-						| SCALE ':' scale_arguments
-						| TRANSLATE ':' translate_arguments
-						| HIDE ':' hide_arguments
+					| SCALE ':' scale_arguments
+					| TRANSLATE ':' translate_argument
+					| HIDE ':' hide_argument
 
-control : IF condition '{' program '}'
-control : WHILE condition '{' program '}'
-control : FOR IDENTIFIER ':' IDENTIFIER '{' program '}'
-control : APPLY IDENTIFIER '{' program '}'
+
+control : IF condition '{' program '}' 
+
+control : WHILE condition '{' program '}' 
+
+control : FOR integer_argument ':' integer_argument '{' program '}' 
+
+apply_body : IDENTIFIER ';'
+
+
+apply_body : IDENTIFIER ';' apply_body
+
+
+control : APPLY IDENTIFIER '{' apply_body '}' 
+
+condition : integer_argument COND_OP integer_argument
+			| string_argument COND_OP string_argument
+			| boolean_argument
+
+
+assignation : IDENTIFIER '=' shape ';'
+				| IDENTIFIER '=' point ';'
+				| IDENTIFIER '=' color ';'
+				| IDENTIFIER '=' transformation ';'
+				| IDENTIFIER '=' integer_argument ';'
+				| IDENTIFIER '=' string_argument ';'
+				| IDENTIFIER '=' point_argument ';'
+				| IDENTIFIER '=' color_argument ';'
+				| IDENTIFIER '=' boolean_argument ';'
