@@ -145,28 +145,55 @@ def execute(self):
         arguments['stroke-width'] = arguments.pop('border_width')
     if 'border_color' in arguments:
         arguments['stroke'] = arguments.pop('border_color')
+    if 'width' in arguments:
+        arguments['stroke-width'] = arguments.pop('width')
+    if 'c' in arguments:
+        center = arguments.pop('c')
+        arguments['cx'] = center.pop('x')
+        arguments['cy'] = center.pop('y')
+    if 'size' in arguments:
+        arguments['font-size'] = arguments.pop('size')
+    if 'font' in arguments:
+        arguments['font-family'] = arguments.pop('font')
+
     shape = None
+
     if shape_type.upper() == 'LINE':
         shape = shapes.Line()
+        if 'fill' in arguments:
+            arguments['stroke'] = arguments.pop('fill')
+        if 'p1' in arguments:
+            p1 = arguments.pop('p1')
+            arguments['x1'] = p1.pop('x')
+            arguments['y1'] = p1.pop('y')
+        if 'p2' in arguments:
+            p1 = arguments.pop('p2')
+            arguments['x2'] = p1.pop('x')
+            arguments['y2'] = p1.pop('y')
+        print(arguments)
     elif shape_type.upper() == 'CIRCLE':
-        if 'c' in arguments:
-            center = arguments.pop('c')
-            arguments['cx'] = center.pop('x')
-            arguments['cy'] = center.pop('y')
         shape = shapes.Circle()
+
     elif shape_type.upper() == 'RECT':
         if 'o' in arguments:
             center = arguments.pop('o')
             arguments['x'] = center.pop('x')
             arguments['y'] = center.pop('y')
         shape = shapes.Rect()
+
     elif shape_type.upper() == 'ELLIPSE':
         shape = shapes.Ellipse()
+
     elif shape_type.upper() == 'CUSTOMSHAPE':
         points = []
         for point in arguments.pop('p'):
             points.append((point.pop('x'), point.pop('y')))
-        shape = shapes.Polygon(points)
+        if 'close' in arguments and arguments.pop('close') == True:
+            shape = shapes.Polygon(points)
+        else:
+            shape = shapes.Polyline(points)
+
+
     elif shape_type.upper() == 'TEXT':
         shape = text.Text(arguments.pop('content'))
         if 'p' in arguments:
@@ -193,7 +220,11 @@ def execute(self):
     if type == 'NAME':
         return arguments[1].execute()
     elif type == 'HEX':
-        return 'hex(%s)' % arguments[1].execute()
+        color = arguments[1].execute()
+        if color[0:1] == '#':
+            return '%s' % arguments[1].execute()
+        else:
+            return '#%s' % arguments[1].execute()
     elif type == 'RGB':
         return "rgb(%d,%d,%d)" % (int(arguments[1][0].execute()), int(arguments[1][1].execute()), int(arguments[1][2].execute()))
 
@@ -215,7 +246,7 @@ def execute(self):
 
 @addToClass(AST.ConditionalNode)
 def execute(self):
-    if self.nbargs == 1:
+    if self.nbargs == 0:
         return self.children[0].execute()
     else:
         args = [c.execute() for c in self.children]
@@ -227,7 +258,7 @@ if __name__ == "__main__":
     path = 'Tests/'
     ext = '.pnp'
     files = ['clock', 'comboTest1', 'comboTest2', 'comboTest3', 'customShapeTest', 'helloTest', 'ifTest', 'loopTest', 'loopTest2', 'rotationTest', 'rotationTest2', 'simpleShapesTest', 'someTransforms', 'gradient', 'modulo']
-    files = ['modulo']
+    files = ['BUGSACORRIGER']
 
     for file in files:
         print('--------------------------------------')
