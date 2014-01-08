@@ -314,7 +314,10 @@ def p_condition(p):
                 | string_argument COND_OP string_argument
                 | boolean_argument
     '''
-    p[0] = AST.ConditionalNode(p[2], [p[1], p[3]])
+    if len(p) == 4:
+        p[0] = AST.ConditionalNode(p[2], [p[1], p[3]])
+    else:
+        p[0] = AST.ConditionalNode(p[1], [])
 
 def p_assign(p):
     ''' assignation : IDENTIFIER '=' shape ';'
@@ -350,7 +353,7 @@ if __name__ == "__main__":
     import sys
     path = 'Tests/'
     ext = '.pnp'
-    files = ['clock', 'comboTest1', 'comboTest2', 'comboTest3', 'customShapeTest', 'helloTest', 'ifTest', 'loopTest', 'loopTest2', 'rotationTest', 'rotationTest2', 'simpleShapesTest', 'someTransforms']
+    files = ['clock', 'comboTest1', 'comboTest2', 'comboTest3', 'customShapeTest', 'helloTest', 'ifTest', 'loopTest', 'loopTest2', 'rotationTest', 'rotationTest2', 'simpleShapesTest', 'someTransforms', 'gradient', 'modulo']
 
     for file in files:
         print('--------------------------------------')
