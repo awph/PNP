@@ -285,8 +285,25 @@ def compile(filepath):
     dwg.save()
     print('Compiled and saved in: ' + filename + '.svg')
 
+# http://stackoverflow.com/a/2605125
+class Discarder(object):
+    def write(self, text):
+        pass # do nothing
+
 if __name__ == "__main__":
+    import sys
+    # discard output
+    oldstdout = sys.stdout
+    oldstderr = sys.stderr
+    sys.stdout = Discarder()
+    sys.stderr = Discarder()
     from parse import parse
+    sys.stdout = oldstdout
+    sys.stderr = oldstderr
+
+    if len(sys.argv) > 1:
+        compile(sys.argv[1])
+        sys.exit(0)
 
     path = 'examples/'
     ext = 'pnp'
@@ -302,5 +319,4 @@ if __name__ == "__main__":
             try:
                 compile(inputValue[8:])
             except:
-                import sys
                 print("Error:", sys.exc_info()[0])
