@@ -3,18 +3,22 @@ PNP
 
 PNP is a compiler that creates SVG files.
 
-PHP first version of the language is defined below.
+PNP language is defined
+-
 
 ### Arithmetical operators ###
 	+ : integer addition
 	- : integer subtraction
 	* : integer multiplication
 	/ : integer division
+	% : integer modulo
 	= : affectation
 
 ### Logical operators ###
 	< : lesser than
 	> : greater than
+	<= : lesser  or equals
+	>= : greater or equals
 	== : equals
 
 ### Primitive types ###
@@ -24,22 +28,22 @@ PHP first version of the language is defined below.
 
 ### Shapes ###
 
-	c0 = color : rgb(<int>, <int>, <int>) : hex(<string>) : name(<string>);
-	p1 = point : x(<int>) : y(<int>);
-	l1 = line : p1(<point>) : p2(<point>) : fill_color(<color>) : width(<int>);
-	c1 = circle : c(<point>) : r(<int>) : border_color(<color>) : border_width(<int>) : fill_color(<color>);
-	r1 = rect : o(<point>) : width(<int>) : height(<int>) : rx(<int>) : ry(<int>) : border_color(<color>) : border_width(<int>) : fill_color(<color>);
-	e1 = ellipse : c(<point>) : ry(<int>) : rx(<int>) : border_color(<color>) : border_width(<int>) : fill_color(<color>);
-	s1 = customshape : p(<point>) : p(<point>) : p(<point>) : p(<point>) : ... : border_color(<color>) : border_width(<int>) : close(<bool>) : fill_color(<color>);
-	t1 = text : content(<string>) : p(<point>) : font(<string>) : size(<int>) : fill_color(<color>);
+	aColor = color : rgb(<int>, <int>, <int>) : hex(<string>) : name(<string>);
+	aPoint = point : x(<int>) : y(<int>);
+	aLine = line : p1(<point>) : p2(<point>) : fill_color(<color>) : width(<int>);
+	aCircle = circle : c(<point>) : r(<int>) : border_color(<color>) : border_width(<int>) : fill_color(<color>);
+	aRect = rect : o(<point>) : width(<int>) : height(<int>) : rx(<int>) : ry(<int>) : border_color(<color>) : border_width(<int>) : fill_color(<color>);
+	anEllipse = ellipse : c(<point>) : ry(<int>) : rx(<int>) : border_color(<color>) : border_width(<int>) : fill_color(<color>);
+	aCustomShape = customshape : p(<point>) : p(<point>) : p(<point>) : p(<point>) : ... : border_color(<color>) : border_width(<int>) : close(<bool>) : fill_color(<color>);
+	aText = text : content(<string>) : p(<point>) : font(<string>) : size(<int>) : fill_color(<color>);
 
 
 ### Transformations ###
 
-	R1 = rotate : angle(<int>) : c(<point>);
-	S1 = scale : sx(<int>) : sy(<int>);
-	T1 = translate : p(<point>);
-	H1 = hide : h(<bool>);
+	aRotation = rotate : angle(<int>) : c(<point>);
+	aScale = scale : sx(<int>) : sy(<int>);
+	aTranslation = translate : p(<point>);
+	displayOrHide = hide : h(<bool>);
 
 ### Controls ###
 
@@ -63,5 +67,15 @@ PHP first version of the language is defined below.
 		<object>;
 		<object>;
 	}
+
+
+### Hello World! ###
+
+	display = hide : h(NO);
+	textPosition = point : x(20) : y(20);
+	myHelloWorld = text : content("Hello world!") : p(textPosition);
 	
-If we have time we'll add animations like translation with delta t, rotation, scaling, etc.
+	apply display
+	{
+		myHelloWorld;
+	}
